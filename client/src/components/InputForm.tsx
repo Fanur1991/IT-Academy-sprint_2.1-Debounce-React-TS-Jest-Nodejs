@@ -12,10 +12,10 @@ const InputForm = () => {
       <Input
         style={{ width: 500 }}
         size="large"
-        placeholder="Type to find a book"
+        placeholder="Type to sort books"
       />
       <Button type="primary" size="large">
-        Filter
+        Reset
       </Button>
       <Space>
         <Switch
@@ -24,7 +24,7 @@ const InputForm = () => {
           defaultChecked
           onChange={onChange}
         ></Switch>
-        <Typography.Text>Turn on/off debounce</Typography.Text>
+        <Typography.Text>Turn debounce on/off</Typography.Text>
       </Space>
     </Flex>
   );

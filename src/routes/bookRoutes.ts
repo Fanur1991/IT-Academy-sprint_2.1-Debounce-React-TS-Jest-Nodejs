@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import { fetchAllBooks } from '../controllers/bookControllers';
+import { fetchAllBooks, fetchFiltredBooks } from '../controllers/bookControllers';
 
 const router = Router();
 
-router.get('/books', fetchAllBooks);
+router.get('/', fetchAllBooks);
+router.get('/books', fetchFiltredBooks);
 
 export default router;

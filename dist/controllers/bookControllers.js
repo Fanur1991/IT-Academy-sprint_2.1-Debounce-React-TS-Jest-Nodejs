@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchAllBooks = void 0;
+exports.fetchFiltredBooks = exports.fetchAllBooks = void 0;
 const bookService_1 = require("../services/bookService");
 const fetchAllBooks = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -25,4 +25,19 @@ const fetchAllBooks = (_req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.fetchAllBooks = fetchAllBooks;
+const fetchFiltredBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const searchQuery = req.query.search;
+        const filtredBooks = (0, bookService_1.filterBooks)(searchQuery);
+        if ((yield filtredBooks).length > 0)
+            res.json(filtredBooks);
+        else
+            res.status(404).json({ message: 'Books not found' });
+    }
+    catch (error) {
+        console.log('Error in controller' + error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+exports.fetchFiltredBooks = fetchFiltredBooks;
 //# sourceMappingURL=bookControllers.js.map

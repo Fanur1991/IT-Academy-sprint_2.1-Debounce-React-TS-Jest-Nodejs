@@ -19,7 +19,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchAllBooks = async () => {
       try {
-        const response = await fetch('/api/books', {
+        const response = await fetch('/api', {
           method: 'GET',
         });
 

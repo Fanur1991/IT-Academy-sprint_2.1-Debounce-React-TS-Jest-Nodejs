@@ -35,9 +35,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllBooks = void 0;
+exports.filterBooks = exports.getAllBooks = void 0;
 const fs = __importStar(require("fs"));
+const util_1 = require("util");
 const dotenv_1 = __importDefault(require("dotenv"));
+const readFileAsync = (0, util_1.promisify)(fs.readFile);
 dotenv_1.default.config();
 const PATH_DATABASE = process.env.PATH_DATABASE || '';
 const getAllBooks = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -47,6 +49,7 @@ const getAllBooks = () => __awaiter(void 0, void 0, void 0, function* () {
         if (!PATH_DATABASE) {
             throw new Error('Database path is not defined');
         }
+        // Leemos los datos de JSON
         const data = fs.readFileSync(PATH_DATABASE, 'utf-8');
         const books = JSON.parse(data);
         return books;
@@ -57,4 +60,19 @@ const getAllBooks = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getAllBooks = getAllBooks;
+const filterBooks = (searchQuery) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // Leemos los datos de JSON
+        const data = yield readFileAsync(PATH_DATABASE, 'utf-8');
+        const books = JSON.parse(data);
+        // Filtrar libros por autor basado en search Query
+        const filtredBooks = books.filter((book) => book.title.toLowerCase().includes(searchQuery.toLowerCase()));
+        return filtredBooks;
+    }
+    catch (error) {
+        console.log('Error in service' + error);
+        throw new Error('Error fetching books from database');
+    }
+});
+exports.filterBooks = filterBooks;
 //# sourceMappingURL=bookService.js.map
