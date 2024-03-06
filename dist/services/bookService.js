@@ -45,7 +45,7 @@ const PATH_DATABASE = process.env.PATH_DATABASE || '';
 const getAllBooks = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Aquí es donde se simula el retraso de acceso a la base de datos
-        yield new Promise((resolve) => setTimeout(resolve, 1000));
+        // await new Promise((resolve) => setTimeout(resolve, 500));
         if (!PATH_DATABASE) {
             throw new Error('Database path is not defined');
         }
@@ -62,6 +62,8 @@ const getAllBooks = () => __awaiter(void 0, void 0, void 0, function* () {
 exports.getAllBooks = getAllBooks;
 const filterBooks = (searchQuery) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        // Aquí es donde se simula el retraso de acceso a la base de datos
+        // await new Promise((resolve) => setTimeout(resolve, 500));
         // Leemos los datos de JSON
         const data = yield readFileAsync(PATH_DATABASE, 'utf-8');
         const books = JSON.parse(data);

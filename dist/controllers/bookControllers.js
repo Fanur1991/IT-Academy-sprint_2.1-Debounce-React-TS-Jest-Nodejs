@@ -28,8 +28,8 @@ exports.fetchAllBooks = fetchAllBooks;
 const fetchFiltredBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const searchQuery = req.query.search;
-        const filtredBooks = (0, bookService_1.filterBooks)(searchQuery);
-        if ((yield filtredBooks).length > 0)
+        const filtredBooks = yield (0, bookService_1.filterBooks)(searchQuery);
+        if (yield filtredBooks)
             res.json(filtredBooks);
         else
             res.status(404).json({ message: 'Books not found' });

@@ -16,9 +16,9 @@ export const fetchAllBooks = async (_req: Request, res: Response) => {
 export const fetchFiltredBooks = async (req: Request, res: Response) => {
   try {
     const searchQuery: string = req.query.search as string;
-    const filtredBooks = filterBooks(searchQuery);
+    const filtredBooks = await filterBooks(searchQuery);
 
-    if ((await filtredBooks).length > 0) res.json(filtredBooks);
+    if (await filtredBooks) res.json(filtredBooks);
     else res.status(404).json({ message: 'Books not found' });
   } catch (error) {
     console.log('Error in controller' + error);

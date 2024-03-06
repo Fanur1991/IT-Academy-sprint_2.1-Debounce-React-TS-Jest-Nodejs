@@ -1,5 +1,8 @@
 import { Router } from 'express';
-import { fetchAllBooks, fetchFiltredBooks } from '../controllers/bookControllers';
+import {
+  fetchAllBooks,
+  fetchFiltredBooks,
+} from '../controllers/bookControllers';
 
 const router = Router();
 

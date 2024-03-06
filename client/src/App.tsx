@@ -37,6 +37,31 @@ const App: React.FC = () => {
     fetchAllBooks();
   }, []);
 
+  const filterBooksWithoutDebounce = async (searchQuery: string) => {
+    try {
+      const response = await fetch(`/api/books?search=${searchQuery}`, {
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data: BookType[] = await response.json();
+
+      setBooks(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const filterBooksWithDebounce = async (searchQuery: string) => {
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="App">
       <Flex style={{ marginTop: 50 }} align="center" vertical>
@@ -47,7 +72,10 @@ const App: React.FC = () => {
             </Title>
           </Form.Item>
           <Form.Item>
-            <InputForm />
+            <InputForm
+              filterBooksWithoutDebounce={filterBooksWithoutDebounce}
+              filterBooksWithDebounce={filterBooksWithDebounce}
+            />
           </Form.Item>
           <Form.Item>
             <ListForm books={books} />
