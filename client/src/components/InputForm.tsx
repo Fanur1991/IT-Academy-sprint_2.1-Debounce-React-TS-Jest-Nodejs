@@ -5,16 +5,18 @@ import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 interface InputFormProps {
   filterBooksWithoutDebounce: (searchQuery: string) => void;
   filterBooksWithDebounce: (searchQuery: string) => void;
+  requestCount: number;
 }
 
 const InputForm: React.FC<InputFormProps> = ({
   filterBooksWithoutDebounce,
   filterBooksWithDebounce,
+  requestCount,
 }) => {
   const [searchQueryWithoutDebounce, setSearchQueryWithoutDebounce] =
-    useState<string>('');
+    useState<string>(''); // Estado del texto de entrada sin debounce
   const [searchQueryWithDebounce, setSearchQueryWithDebounce] =
-    useState<string>('');
+    useState<string>(''); // Estado del texto de entrada con debounce
   const [turnOnDebounce, setTurnOnDebounce] = useState<boolean>(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,15 +36,22 @@ const InputForm: React.FC<InputFormProps> = ({
   };
 
   return (
-    <Flex justify="center" align="center" gap="large">
-      <Input
-        value={searchQueryWithoutDebounce || searchQueryWithDebounce}
-        onChange={handleInputChange}
-        style={{ width: 500 }}
-        size="large"
-        placeholder="Type to filter books"
-        allowClear
-      />
+    <Flex justify="center" align="start" gap="large">
+      <Flex justify="center" align="center" gap="large" vertical>
+        <Input
+          value={searchQueryWithoutDebounce || searchQueryWithDebounce}
+          onChange={handleInputChange}
+          style={{ width: 500 }}
+          size="large"
+          placeholder="Filter by title..."
+          allowClear
+          autoFocus
+        />
+        <span style={{ fontSize: '16px' }}>
+          Number of requests per server:{' '}
+          <span style={{ fontWeight: 600, fontSize: 18 }}>{requestCount}</span>
+        </span>
+      </Flex>
       <Flex
         style={{
           border: '1px solid #8e8e8e',
@@ -64,7 +73,7 @@ const InputForm: React.FC<InputFormProps> = ({
             Turn <span style={{ fontWeight: 500 }}>debounce</span> on
           </Typography.Text>
         </Flex>
-        <Flex gap="small">
+        {/* <Flex gap="small">
           <Switch
             checkedChildren={<CheckOutlined />}
             unCheckedChildren={<CloseOutlined />}
@@ -84,8 +93,8 @@ const InputForm: React.FC<InputFormProps> = ({
           ></Switch>
           <Typography.Text>
             Turn <span style={{ fontWeight: 500 }}>memoize</span> on
-          </Typography.Text>
-        </Flex>
+          </Typography.Text> */}
+        {/* </Flex> */}
       </Flex>
     </Flex>
   );

@@ -68,7 +68,7 @@ const filterBooks = (searchQuery) => __awaiter(void 0, void 0, void 0, function*
         const data = yield readFileAsync(PATH_DATABASE, 'utf-8');
         const books = JSON.parse(data);
         // Filtrar libros por autor basado en search Query
-        const filtredBooks = books.filter((book) => book.title.toLowerCase().includes(searchQuery.toLowerCase()));
+        const filtredBooks = books.filter((book) => book.title.toLowerCase().includes(searchQuery.toLowerCase().trim()));
         return filtredBooks;
     }
     catch (error) {

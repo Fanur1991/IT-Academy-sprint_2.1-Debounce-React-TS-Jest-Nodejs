@@ -39,7 +39,7 @@ export const filterBooks = async (searchQuery: string): Promise<Book[]> => {
 
     // Filtrar libros por autor basado en search Query
     const filtredBooks: Book[] = books.filter((book) =>
-      book.title.toLowerCase().includes(searchQuery.toLowerCase())
+      book.title.toLowerCase().includes(searchQuery.toLowerCase().trim())
     );
 
     return filtredBooks;

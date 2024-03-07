@@ -4,9 +4,10 @@ import { List, Typography, Flex } from 'antd';
 
 interface IBookList {
   books: BookType[];
+  searchQuery: string;
 }
 
-const ListForm: React.FC<IBookList> = ({ books }) => {
+const ListForm: React.FC<IBookList> = ({ books, searchQuery }) => {
   return (
     <div>
       <List
@@ -17,7 +18,11 @@ const ListForm: React.FC<IBookList> = ({ books }) => {
         }
         bordered
         dataSource={books}
-        renderItem={(book) => <List.Item children={<BookForm book={book} />} />}
+        renderItem={(book) => (
+          <List.Item
+            children={<BookForm book={book} searchQuery={searchQuery} />}
+          />
+        )}
       />
     </div>
   );

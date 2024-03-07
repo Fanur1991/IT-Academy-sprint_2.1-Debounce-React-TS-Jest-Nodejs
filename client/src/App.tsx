@@ -4,6 +4,7 @@ import InputForm from './components/InputForm';
 import ListForm from './components/ListForm';
 
 import './App.css';
+import { debounce } from './utils/debounce';
 
 const { Title } = Typography;
 
@@ -15,6 +16,8 @@ export type BookType = {
 
 const App: React.FC = () => {
   const [books, setBooks] = useState<BookType[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [requestCount, setRequestCount] = useState<number>(0);
 
   useEffect(() => {
     const fetchAllBooks = async () => {
@@ -37,7 +40,7 @@ const App: React.FC = () => {
     fetchAllBooks();
   }, []);
 
-  const filterBooksWithoutDebounce = async (searchQuery: string) => {
+  const fetchFiltredBooks = async (searchQuery: string) => {
     try {
       const response = await fetch(`/api/books?search=${searchQuery}`, {
         method: 'GET',
@@ -50,17 +53,20 @@ const App: React.FC = () => {
       const data: BookType[] = await response.json();
 
       setBooks(data);
+      setSearchQuery(searchQuery);
+      setRequestCount((prevCount) => (searchQuery ? ++prevCount : 0));
     } catch (error) {
       console.log(error);
     }
   };
 
-  const filterBooksWithDebounce = async (searchQuery: string) => {
-    try {
-    } catch (error) {
-      console.log(error);
-    }
+  const filterBooksWithoutDebounce = (searchQuery: string) => {
+    fetchFiltredBooks(searchQuery);
   };
+
+  const filterBooksWithDebounce = debounce((searchQuery: string) => {
+    fetchFiltredBooks(searchQuery);
+  }, 500);
 
   return (
     <div className="App">
@@ -75,10 +81,11 @@ const App: React.FC = () => {
             <InputForm
               filterBooksWithoutDebounce={filterBooksWithoutDebounce}
               filterBooksWithDebounce={filterBooksWithDebounce}
+              requestCount={requestCount}
             />
           </Form.Item>
           <Form.Item>
-            <ListForm books={books} />
+            <ListForm books={books} searchQuery={searchQuery} />
           </Form.Item>
         </Form>
       </Flex>
