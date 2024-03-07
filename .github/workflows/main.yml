@@ -27,6 +27,3 @@ jobs:
 
       - name: Run tests
         run: npm run test
-
-      - name: Run Server+Client Apps
-        run: npm run start
