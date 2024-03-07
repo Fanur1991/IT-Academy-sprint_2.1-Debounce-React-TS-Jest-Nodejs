@@ -37,8 +37,3 @@ jobs:
         run: |
           cd client
           npm run test
-
-      - name: Run Server+Client Apps
-        run: |
-          cd client
-          npm run start
