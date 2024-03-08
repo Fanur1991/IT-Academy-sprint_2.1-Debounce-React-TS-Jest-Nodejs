@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { Flex, Form, Typography } from 'antd';
 import InputForm from './components/InputForm';
 import ListForm from './components/ListForm';
+import { debounce } from './utils/debounce';
 
 import './App.css';
-import { debounce } from './utils/debounce';
 
 const { Title } = Typography;
 
@@ -66,7 +66,7 @@ const App: React.FC = () => {
 
   const filterBooksWithDebounce = debounce((searchQuery: string) => {
     fetchFiltredBooks(searchQuery);
-  }, 500);
+  });
 
   return (
     <div className="App">

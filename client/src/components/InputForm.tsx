@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Flex, Input, Button, Switch, Space, Typography } from 'antd';
+import { Flex, Input, Switch, Typography } from 'antd';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 interface InputFormProps {
@@ -49,7 +49,7 @@ const InputForm: React.FC<InputFormProps> = ({
         />
         <span style={{ fontSize: '16px' }}>
           Number of requests per server:{' '}
-          <span style={{ fontWeight: 600, fontSize: 18 }}>{requestCount}</span>
+          <span style={{ fontWeight: 600, fontSize: 24 }}>{requestCount}</span>
         </span>
       </Flex>
       <Flex
@@ -58,7 +58,7 @@ const InputForm: React.FC<InputFormProps> = ({
           borderRadius: '15px',
           padding: 10,
         }}
-        gap="small"
+        gap="middle"
         vertical
       >
         <Flex gap="small">
