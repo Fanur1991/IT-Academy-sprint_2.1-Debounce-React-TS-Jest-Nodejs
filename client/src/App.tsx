@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Flex, Form, Typography } from 'antd';
 import InputForm from './components/InputForm';
 import ListForm from './components/ListForm';
-import { debounce } from './utils/debounce';
 
 import './App.css';
 
@@ -17,7 +16,14 @@ export type BookType = {
 const App: React.FC = () => {
   const [books, setBooks] = useState<BookType[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [requestCount, setRequestCount] = useState<number>(0);
+  const [responseCount, setResponseCount] = useState<number>(0);
+  const [isDebounceOn, setIsDebounceOn] = useState<boolean>(false);
+  const flag: number = isDebounceOn ? 1 : 0;
+
+  const filterBooks = (searchQuery: string, isDebounceOn: boolean) => {
+    setSearchQuery(searchQuery);
+    setIsDebounceOn(isDebounceOn);
+  };
 
   useEffect(() => {
     const fetchAllBooks = async () => {
@@ -30,9 +36,11 @@ const App: React.FC = () => {
           throw new Error('Network response was not ok');
         }
 
-        const data: BookType[] = await response.json();
+        const data = await response.json();
 
-        setBooks(data);
+        const books: BookType[] = data.books;
+
+        setBooks(books);
       } catch (error) {
         console.log(error);
       }
@@ -40,33 +48,34 @@ const App: React.FC = () => {
     fetchAllBooks();
   }, []);
 
-  const fetchFiltredBooks = async (searchQuery: string) => {
-    try {
-      const response = await fetch(`/api/books?search=${searchQuery}`, {
-        method: 'GET',
-      });
+  useEffect(() => {
+    const fetchFiltredBooks = async (searchQuery: string) => {
+      try {
+        const response = await fetch(
+          `/api/books?search=${searchQuery}&flag=${flag}`,
+          {
+            method: 'GET',
+          }
+        );
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+
+        const books: BookType[] = data.books;
+
+        setBooks(books);
+        setResponseCount((responseCount) =>
+          searchQuery ? ++responseCount : 0
+        );
+      } catch (error) {
+        console.log(error);
       }
-
-      const data: BookType[] = await response.json();
-
-      setBooks(data);
-      setSearchQuery(searchQuery);
-      setRequestCount((prevCount) => (searchQuery ? ++prevCount : 0));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const filterBooksWithoutDebounce = (searchQuery: string) => {
+    };
     fetchFiltredBooks(searchQuery);
-  };
-
-  const filterBooksWithDebounce = debounce((searchQuery: string) => {
-    fetchFiltredBooks(searchQuery);
-  });
+  }, [searchQuery]);
 
   return (
     <div className="App">
@@ -79,9 +88,8 @@ const App: React.FC = () => {
           </Form.Item>
           <Form.Item>
             <InputForm
-              filterBooksWithoutDebounce={filterBooksWithoutDebounce}
-              filterBooksWithDebounce={filterBooksWithDebounce}
-              requestCount={requestCount}
+              filterBooks={filterBooks}
+              responseCount={responseCount}
             />
           </Form.Item>
           <Form.Item>

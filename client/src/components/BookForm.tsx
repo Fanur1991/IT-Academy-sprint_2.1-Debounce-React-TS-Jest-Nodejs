@@ -16,7 +16,10 @@ const BookForm: React.FC<IBook> = ({ book, searchQuery }) => {
     return text.split(regex).map((substring, index) => {
       if (substring.toLowerCase() === filter.toLowerCase()) {
         return (
-          <span key={index} style={{ color: 'yellow', fontWeight: 'bold' }}>
+          <span
+            key={index}
+            style={{ backgroundColor: 'yellow', fontWeight: 700 }}
+          >
             {substring}
           </span>
         );

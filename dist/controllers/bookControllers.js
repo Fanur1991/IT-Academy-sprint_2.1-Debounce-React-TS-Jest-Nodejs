@@ -11,11 +11,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchFiltredBooks = exports.fetchAllBooks = void 0;
 const bookService_1 = require("../services/bookService");
+const debounce_1 = require("../utils/debounce");
 const fetchAllBooks = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const books = yield (0, bookService_1.getAllBooks)();
         if (books.length > 0)
-            res.json(books);
+            res.json({ books: books });
         else
             res.status(404).json({ message: 'Books not found' });
     }
@@ -28,9 +29,16 @@ exports.fetchAllBooks = fetchAllBooks;
 const fetchFiltredBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const searchQuery = req.query.search;
-        const filtredBooks = yield (0, bookService_1.filterBooks)(searchQuery);
-        if (yield filtredBooks)
-            res.json(filtredBooks);
+        const flag = req.query.flag;
+        const filtredBooks = parseInt(flag)
+            ? yield (0, debounce_1.debounce)(bookService_1.filterBooks)(searchQuery)
+            : yield (0, bookService_1.filterBooks)(searchQuery);
+        console.log(searchQuery);
+        console.log(flag);
+        console.log(filtredBooks);
+        if (yield filtredBooks) {
+            res.json({ books: filtredBooks });
+        }
         else
             res.status(404).json({ message: 'Books not found' });
     }

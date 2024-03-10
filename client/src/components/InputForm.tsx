@@ -3,32 +3,22 @@ import { Flex, Input, Switch, Typography } from 'antd';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 interface InputFormProps {
-  filterBooksWithoutDebounce: (searchQuery: string) => void;
-  filterBooksWithDebounce: (searchQuery: string) => void;
-  requestCount: number;
+  filterBooks: (searchQuery: string, isDebounceOn: boolean) => void;
+  responseCount: number;
 }
 
 const InputForm: React.FC<InputFormProps> = ({
-  filterBooksWithoutDebounce,
-  filterBooksWithDebounce,
-  requestCount,
+  filterBooks,
+  responseCount,
 }) => {
-  const [searchQueryWithoutDebounce, setSearchQueryWithoutDebounce] =
-    useState<string>(''); // Estado del texto de entrada sin debounce
-  const [searchQueryWithDebounce, setSearchQueryWithDebounce] =
-    useState<string>(''); // Estado del texto de entrada con debounce
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [turnOnDebounce, setTurnOnDebounce] = useState<boolean>(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue: string = event.target.value;
 
-    if (!turnOnDebounce) {
-      setSearchQueryWithoutDebounce(newValue);
-      filterBooksWithoutDebounce(newValue);
-    } else {
-      setSearchQueryWithDebounce(newValue);
-      filterBooksWithDebounce(newValue);
-    }
+    setSearchQuery(newValue);
+    filterBooks(newValue, turnOnDebounce);
   };
 
   const handleSwitchChange = (checked: boolean): void => {
@@ -39,7 +29,7 @@ const InputForm: React.FC<InputFormProps> = ({
     <Flex justify="center" align="start" gap="large">
       <Flex justify="center" align="center" gap="large" vertical>
         <Input
-          value={searchQueryWithoutDebounce || searchQueryWithDebounce}
+          value={searchQuery}
           onChange={handleInputChange}
           style={{ width: 500 }}
           size="large"
@@ -48,8 +38,8 @@ const InputForm: React.FC<InputFormProps> = ({
           autoFocus
         />
         <span style={{ fontSize: '16px' }}>
-          Number of requests per server:{' '}
-          <span style={{ fontWeight: 600, fontSize: 24 }}>{requestCount}</span>
+          Number of responses from server:{' '}
+          <span style={{ fontWeight: 600, fontSize: 24 }}>{responseCount}</span>
         </span>
       </Flex>
       <Flex

@@ -1,6 +1,6 @@
 import { BookType } from '../App';
 import BookForm from './BookForm';
-import { List, Typography, Flex } from 'antd';
+import { List, Typography } from 'antd';
 
 interface IBookList {
   books: BookType[];
