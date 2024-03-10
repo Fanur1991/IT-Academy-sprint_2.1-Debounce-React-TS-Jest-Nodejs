@@ -22,17 +22,17 @@ const InputForm: React.FC<InputFormProps> = ({
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue: string = event.target.value;
 
-    if (!turnOnDebounce) {
-      setSearchQueryWithoutDebounce(newValue);
-      filterBooksWithoutDebounce(newValue);
-    } else {
-      setSearchQueryWithDebounce(newValue);
-      filterBooksWithDebounce(newValue);
-    }
-  };
+    const filterMethod = turnOnDebounce
+      ? filterBooksWithDebounce
+      : filterBooksWithoutDebounce;
 
-  const handleSwitchChange = (checked: boolean): void => {
-    setTurnOnDebounce(checked);
+    if (turnOnDebounce) {
+      setSearchQueryWithDebounce(newValue);
+    } else {
+      setSearchQueryWithoutDebounce(newValue);
+    }
+
+    filterMethod(newValue);
   };
 
   return (
@@ -65,36 +65,13 @@ const InputForm: React.FC<InputFormProps> = ({
           <Switch
             checkedChildren={<CheckOutlined />}
             unCheckedChildren={<CloseOutlined />}
-            defaultChecked={false}
-            onChange={handleSwitchChange}
-            value={turnOnDebounce}
+            checked={turnOnDebounce}
+            onChange={setTurnOnDebounce}
           ></Switch>
           <Typography.Text>
             Turn <span style={{ fontWeight: 500 }}>debounce</span> on
           </Typography.Text>
         </Flex>
-        {/* <Flex gap="small">
-          <Switch
-            checkedChildren={<CheckOutlined />}
-            unCheckedChildren={<CloseOutlined />}
-            defaultChecked={false}
-            disabled
-          ></Switch>
-          <Typography.Text>
-            Turn <span style={{ fontWeight: 500 }}>throttle</span> on
-          </Typography.Text>
-        </Flex>
-        <Flex gap="small">
-          <Switch
-            checkedChildren={<CheckOutlined />}
-            unCheckedChildren={<CloseOutlined />}
-            defaultChecked={false}
-            disabled
-          ></Switch>
-          <Typography.Text>
-            Turn <span style={{ fontWeight: 500 }}>memoize</span> on
-          </Typography.Text> */}
-        {/* </Flex> */}
       </Flex>
     </Flex>
   );

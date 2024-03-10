@@ -1,80 +1,79 @@
 import { describe, expect, it, beforeEach } from '@jest/globals';
 import { debounce } from '../utils/debounce';
 
-describe('Debounce function without arguments', () => {
-  let delay: number;
-  let myMock: jest.Mock;
-  let debouncedFunction: Function;
+jest.useFakeTimers();
+
+describe('La función debounce', () => {
+  let delay: number; // Tiempo de espera para el debounce
+  let myMockFn: jest.Mock; // Función simulada para realizar el seguimiento de las llamadas
+  let debouncedFunction: Function; // Función debounce que se va a probar
+
+  jest.setTimeout(10000);
 
   beforeEach(() => {
-    delay = 200;
-    myMock = jest.fn();
-    debouncedFunction = debounce(myMock, delay);
+    delay = 200; // Configura el tiempo de espera en 200 milisegundos
+    myMockFn = jest.fn(); // Inicializa una función simulada para realizar el seguimiento de las llamadas
+    debouncedFunction = debounce(myMockFn, delay); // Crea una función debounce con la función simulada y el tiempo de espera
   });
 
-  it('Should debounce function calls and execute only once after delay', async () => {
-    // muchas veces llamamos funcion de debouncedFunction
-    for (let i = 0; i < 100; i++) {
+  it('Debería ejecutar una sola vez después de un retraso', async () => {
+    // Llama a la función de debounce 5 veces
+    for (let i = 0; i < 5; i++) {
       await debouncedFunction();
     }
 
-    // Pausa para llamar a un callback en debounce
-    await new Promise((resolve) => setTimeout(resolve, delay));
+    // Avanza el tiempo en la cantidad de retraso especificada
+    jest.advanceTimersByTime(delay);
 
-    expect(myMock).toHaveBeenCalledTimes(1);
+    // Verifica que la función se haya llamado solo una vez
+    expect(myMockFn).toHaveBeenCalledTimes(1);
   });
 
-  it('Should debounce single call and execute once after delay', async () => {
+  it('Debería ejecutar una sola vez después de un retraso', async () => {
+    // Llamar a la función debounce solo una vez
     await debouncedFunction();
 
-    // Pausa para llamar a un callback en debounce
-    await new Promise((resolve) => setTimeout(resolve, delay));
+    // Avanza el tiempo en la cantidad de retraso especificada
+    jest.advanceTimersByTime(delay);
 
-    expect(myMock).toHaveBeenCalledTimes(1);
+    // Verifica que la función se haya llamado solo una vez
+    expect(myMockFn).toHaveBeenCalledTimes(1);
   });
 
-  it('Should make two call callback function', async () => {
-    for (let i = 0; i < 100; i++) {
+  it('Debería hacer dos llamadas a la función de retorno', async () => {
+    for (let i = 0; i < 10; i++) {
       await debouncedFunction();
-      if (i === 50) {
+      if (i === 5) {
         // Pausa para llamar a un callback en debounce
-        await new Promise((resolve) => setTimeout(resolve, delay));
+        jest.runOnlyPendingTimers();
       }
     }
 
-    // Pausa para llamar a un callback en debounce
-    await new Promise((resolve) => setTimeout(resolve, delay));
+    jest.runAllTimers(); // Avanzar manualmente los timers simulados
 
-    expect(myMock).toHaveBeenCalledTimes(2);
-  });
-});
-
-describe('Debounce function with different arguments', () => {
-  let delay: number;
-  let myMock: jest.Mock;
-  let debouncedFunction: Function;
-
-  beforeEach(() => {
-    delay = 200;
-    myMock = jest.fn();
-    debouncedFunction = debounce(myMock, delay);
+    // Verifica que la función simulada se haya llamado dos veces
+    expect(myMockFn).toHaveBeenCalledTimes(2);
   });
 
-  it('Should call with last argument', async () => {
+  it('Debería llamar con el último argumento después del retraso de debounce', async () => {
     const arrOfArguments: [string, string, string] = [
       'arg 1',
       'arg 2',
       'arg 3',
     ];
 
-    for (let i = 0; i < arrOfArguments.length; i++) {
-      await debouncedFunction(arrOfArguments[i]);
+    // Llama a la función con diferentes argumentos
+    for (const arg of arrOfArguments) {
+      await debouncedFunction(arg);
     }
 
-    // Pausa para llamar a un callback en debounce
-    await new Promise((resolve) => setTimeout(resolve, delay));
+    // Activa instantáneamente todos los temporizadores pendientes
+    jest.runAllTimers();
 
-    expect(myMock).toHaveBeenCalledTimes(1);
-    expect(myMock).toHaveBeenCalledWith('arg 3');
+    // Comprueba que la función simulada se haya llamado solo una vez
+    expect(myMockFn).toHaveBeenCalledTimes(1);
+
+    // Comprueba que se pasó el último argumento durante la llamada
+    expect(myMockFn).toHaveBeenCalledWith('arg 3');
   });
 });

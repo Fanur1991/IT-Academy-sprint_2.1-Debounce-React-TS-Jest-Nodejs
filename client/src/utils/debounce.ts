@@ -14,7 +14,7 @@ export const debounce = (callback: (...args: any[]) => void, delay = 700) => {
 // Opcion 2
 // export const debounce = <T extends (...args: any[]) => any>(
 //   callback: T,
-//   delay = 500
+//   delay = 1000
 // ) => {
 //   let timeoutId: ReturnType<typeof setTimeout>;
 

@@ -1,6 +1,6 @@
 import { BookType } from '../App';
 import BookForm from './BookForm';
-import { List, Typography, Flex } from 'antd';
+import { List, Typography, Spin } from 'antd';
 
 interface IBookList {
   books: BookType[];
@@ -13,7 +13,7 @@ const ListForm: React.FC<IBookList> = ({ books, searchQuery }) => {
       <List
         header={
           <Typography.Title style={{ margin: 0 }} level={4}>
-            Book List
+            {books.length === 0 ? <Spin spinning /> : 'Book List'}
           </Typography.Title>
         }
         bordered
