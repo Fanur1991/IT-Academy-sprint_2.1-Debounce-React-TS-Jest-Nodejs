@@ -5,15 +5,17 @@ import { List, Typography, Spin } from 'antd';
 interface IBookList {
   books: BookType[];
   searchQuery: string;
+  loading: boolean;
 }
 
-const ListForm: React.FC<IBookList> = ({ books, searchQuery }) => {
+const ListForm: React.FC<IBookList> = ({ books, searchQuery, loading }) => {
   return (
     <div>
       <List
+        loading={loading}
         header={
           <Typography.Title style={{ margin: 0 }} level={4}>
-            {books.length === 0 ? <Spin spinning /> : 'Book List'}
+            Book List
           </Typography.Title>
         }
         bordered

@@ -18,7 +18,7 @@ describe('La función debounce', () => {
 
   it('Debería ejecutar una sola vez después de un retraso', async () => {
     // Llama a la función de debounce 5 veces
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 10; i++) {
       await debouncedFunction();
     }
 

@@ -18,10 +18,12 @@ const App: React.FC = () => {
   const [books, setBooks] = useState<BookType[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [requestCount, setRequestCount] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchAllBooks = async () => {
       try {
+        setLoading(true);
         const response = await fetch('/api', {
           method: 'GET',
         });
@@ -33,6 +35,7 @@ const App: React.FC = () => {
         const data: BookType[] = await response.json();
 
         setBooks(data);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -42,6 +45,7 @@ const App: React.FC = () => {
 
   const fetchFiltredBooks = async (searchQuery: string) => {
     try {
+      setLoading(true);
       const response = await fetch(`/api/books?search=${searchQuery}`, {
         method: 'GET',
       });
@@ -52,6 +56,7 @@ const App: React.FC = () => {
 
       const data: BookType[] = await response.json();
 
+      setLoading(false);
       setBooks(data);
       setSearchQuery(searchQuery);
       setRequestCount((prevCount) => (searchQuery ? ++prevCount : 0));
@@ -85,7 +90,11 @@ const App: React.FC = () => {
             />
           </Form.Item>
           <Form.Item>
-            <ListForm books={books} searchQuery={searchQuery} />
+            <ListForm
+              books={books}
+              searchQuery={searchQuery}
+              loading={loading}
+            />
           </Form.Item>
         </Form>
       </Flex>
