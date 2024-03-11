@@ -7,7 +7,7 @@ const readFileAsync = promisify(fs.readFile);
 
 dotenv.config();
 
-const PATH_DATABASE = process.env.PATH_DATABASE || '';
+const PATH_DATABASE = '../data/books.json' || '';
 
 export const getAllBooks = async (): Promise<Book[]> => {
   try {
