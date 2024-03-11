@@ -9,6 +9,7 @@ Este proyecto tiene como objetivo probar el funcionamiento de la función deboun
 ![Jest](https://img.shields.io/badge/-Jest-C21325?style=flat-square&logo=jest&logoColor=white)
 ![Express](https://img.shields.io/badge/-Express-000000?style=flat-square&logo=express&logoColor=white)
 ![React](https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=react&logoColor=white)
+![Ant Design](https://img.shields.io/badge/-Ant_Design-61DAFB?style=flat-square&logo=Ant_Design&logoColor=white)
 
 ## Scripts
 
