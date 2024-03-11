@@ -38,7 +38,7 @@ Ejecuta pruebas utilizando Jest para verificar el correcto funcionamiento de la 
 
 ## Licencia
 
-Este proyecto se distribuye bajo la licencia ISC. Consulta el archivo `LICENSE` para más detalles.
+Este proyecto se distribuye bajo la licencia Apache. Consulta el archivo `LICENSE` para más detalles.
 
 ---
 
