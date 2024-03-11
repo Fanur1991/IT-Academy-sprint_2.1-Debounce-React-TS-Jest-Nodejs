@@ -10,21 +10,27 @@ Este proyecto tiene como objetivo probar el funcionamiento de la función deboun
 ## Scripts
 
 ### `npm run dev`
+
 Ejecuta el proyecto en modo de desarrollo utilizando TypeScript y ESM.
 
 ### `npm run tsc`
+
 Compila los archivos TypeScript a JavaScript.
 
 ### `npm run tsc:watch`
+
 Inicia el compilador TypeScript en modo de observación.
 
 ### `npm start`
+
 Inicia el servidor y la parte del cliente del proyecto simultáneamente.
 
 ### `npm run start:cli`
+
 Inicia una interfaz de línea de comandos para interactuar con la aplicación.
 
 ### `npm test`
+
 Ejecuta pruebas utilizando Jest para verificar el correcto funcionamiento de la función debounce.
 
 ## Licencia
