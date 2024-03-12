@@ -9,6 +9,8 @@ interface IBookList {
 }
 
 const ListForm: React.FC<IBookList> = ({ books, searchQuery, loading }) => {
+  console.log(books);
+  
   return (
     <div>
       <List

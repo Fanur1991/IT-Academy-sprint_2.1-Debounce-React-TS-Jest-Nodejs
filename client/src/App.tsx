@@ -33,6 +33,7 @@ const App: React.FC = () => {
         }
 
         const data: BookType[] = await response.json();
+        console.log(data);
 
         setBooks(data);
         setLoading(false);

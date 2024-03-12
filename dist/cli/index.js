@@ -8,7 +8,7 @@ const colors_1 = __importDefault(require("colors"));
 const debounce_1 = require("../debounce/debounce");
 const rl = readline_1.default.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
 });
 function handleInput(input) {
     console.log(colors_1.default.green(`Entrada recibida: ${input}`));

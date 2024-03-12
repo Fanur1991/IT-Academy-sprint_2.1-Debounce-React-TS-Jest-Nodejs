@@ -29,7 +29,7 @@ const fetchFiltredBooks = (req, res) => __awaiter(void 0, void 0, void 0, functi
     try {
         const searchQuery = req.query.search;
         const filtredBooks = yield (0, bookService_1.filterBooks)(searchQuery);
-        if (yield filtredBooks)
+        if ((yield filtredBooks.length) > 0)
             res.json(filtredBooks);
         else
             res.status(404).json({ message: 'Books not found' });
