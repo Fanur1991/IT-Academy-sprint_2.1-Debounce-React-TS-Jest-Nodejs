@@ -1,6 +1,6 @@
 import { BookType } from '../App';
 import BookForm from './BookForm';
-import { List, Typography, Spin } from 'antd';
+import { List, Typography } from 'antd';
 
 interface IBookList {
   books: BookType[];
@@ -9,8 +9,6 @@ interface IBookList {
 }
 
 const ListForm: React.FC<IBookList> = ({ books, searchQuery, loading }) => {
-  console.log(books);
-  
   return (
     <div>
       <List

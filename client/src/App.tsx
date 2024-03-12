@@ -21,32 +21,34 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetchAllBooks = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('/api', {
-          method: 'GET',
-        });
-
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const data: BookType[] = await response.json();
-        console.log(data);
-
-        setBooks(data);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fetchAllBooks();
   }, []);
+
+  const fetchAllBooks = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api', {
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data: BookType[] = await response.json();
+
+      setBooks(data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const fetchFiltredBooks = async (searchQuery: string) => {
     try {
       setLoading(true);
+      console.log(searchQuery);
+
       const response = await fetch(`/api/books?search=${searchQuery}`, {
         method: 'GET',
       });
@@ -57,6 +59,7 @@ const App: React.FC = () => {
 
       const data: BookType[] = await response.json();
 
+      console.log(data);
       setLoading(false);
       setBooks(data);
       setSearchQuery(searchQuery);
