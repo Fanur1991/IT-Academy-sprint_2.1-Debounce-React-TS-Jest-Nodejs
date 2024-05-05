@@ -47,7 +47,6 @@ const App: React.FC = () => {
   const fetchFiltredBooks = async (searchQuery: string) => {
     try {
       setLoading(true);
-      console.log(searchQuery);
 
       const response = await fetch(`/api/books?search=${searchQuery}`, {
         method: 'GET',
@@ -59,7 +58,6 @@ const App: React.FC = () => {
 
       const data: BookType[] = await response.json();
 
-      console.log(data);
       setLoading(false);
       setBooks(data);
       setSearchQuery(searchQuery);
