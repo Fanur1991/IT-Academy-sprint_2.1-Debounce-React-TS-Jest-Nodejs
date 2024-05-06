@@ -4,16 +4,17 @@ import { debounce } from '../utils/debounce';
 jest.useFakeTimers();
 
 describe('La función debounce', () => {
-  let delay: number; // Tiempo de espera para el debounce
-  let myMockFn: jest.Mock; // Función simulada para realizar el seguimiento de las llamadas
-  let debouncedFunction: Function; // Función debounce que se va a probar
-
-  jest.setTimeout(10000);
+  let delay: number;
+  let myMockFn: jest.Mock;
+  let debouncedFunction: Function;
 
   beforeEach(() => {
-    delay = 200; // Configura el tiempo de espera en 200 milisegundos
-    myMockFn = jest.fn(); // Inicializa una función simulada para realizar el seguimiento de las llamadas
-    debouncedFunction = debounce(myMockFn, delay); // Crea una función debounce con la función simulada y el tiempo de espera
+    // Configura el tiempo de espera en 200 milisegundos
+    delay = 200; 
+    // Inicializa una función simulada para realizar el seguimiento de las llamadas
+    myMockFn = jest.fn(); 
+    // Crea una función debounce con la función simulada y el tiempo de espera
+    debouncedFunction = debounce(myMockFn, delay); 
   });
 
   it('Debería ejecutar una sola vez después de un retraso', async () => {
