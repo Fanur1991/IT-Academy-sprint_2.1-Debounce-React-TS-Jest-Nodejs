@@ -17,6 +17,7 @@ This project aims to test the functionality of the debounce function, which is u
 
 ```
 git clone https://github.com/Fanur1991/IT-Academy-sprint_2.1-Debounce-React-TS-Jest-Nodejs
+cd IT-Academy-sprint_2.1-Debounce-React-TS-Jest-Nodejs
 npm install
 
 cd client
@@ -26,7 +27,7 @@ npm install (in frontend part)
 ### Start the server and the client part of the project simultaneously.
 
 ```
-cd server
+cd IT-Academy-sprint_2.1-Debounce-React-TS-Jest-Nodejs
 npm run start
 ```
 ### Start a command-line interface to interact with the application.
@@ -38,7 +39,7 @@ npm run start:cli
 ### Steps to test the proper functioning of the debounce function
 
 ```
-cd server
+cd IT-Academy-sprint_2.1-Debounce-React-TS-Jest-Nodejs
 npm run test
 ```
 
