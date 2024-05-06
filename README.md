@@ -13,29 +13,34 @@ This project aims to test the functionality of the debounce function, which is u
 
 ## Scripts
 
-### `npm run dev`
+### Steps to install the dependencies
 
-Run the project in development mode using TypeScript and ESM.
+```
+git clone https://github.com/Fanur1991/IT-Academy-sprint_2.1-Debounce-React-TS-Jest-Nodejs
+npm install
 
-### `npm run tsc`
+cd client
+npm install (in frontend part)
+```
 
-Compile TypeScript files to JavaScript.
+### Start the server and the client part of the project simultaneously.
 
-### `npm run tsc:watch`
+```
+cd server
+npm run start
+```
+### Start a command-line interface to interact with the application.
 
-Start the TypeScript compiler in watch mode.
+```
+npm run start:cli
+```
 
-### `npm start`
+### Steps to test the proper functioning of the debounce function
 
-Start the server and the client part of the project simultaneously.
-
-### `npm run start:cli`
-
-Start a command-line interface to interact with the application.
-
-### `npm test`
-
-Run tests using Jest to verify the proper functioning of the debounce function.
+```
+cd server
+npm run test
+```
 
 ## License
 
